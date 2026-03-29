@@ -1,59 +1,178 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Nepa Rudraksha — Local Setup Guide
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Prerequisites
 
-## About Laravel
+Make sure you have the following installed before starting:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP >= 8.1
+- Composer
+- Node.js >= 20.x and npm
+- MySQL or any supported database
+- Git
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 1. Clone the Repository
+```bash
+git clone https://github.com/Shreyaa-Pathak/neparudraksha.git
+cd nepa-rudraksha
+```
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 2. Install PHP Dependencies
+```bash
+composer install
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 3. Install Node Dependencies
+```bash
+npm install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 4. Environment Setup
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Copy the example environment file and generate your app key:
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Contributing
+Then open `.env` and update the following values to match your local setup:
+```env
+APP_NAME="Nepa Rudraksha"
+APP_URL=http://localhost:8000
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nepa_rudraksha
+DB_USERNAME=your_db_username
+DB_PASSWORD=your_db_password
+```
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 5. Create the Database
 
-## Security Vulnerabilities
+In your MySQL client or terminal, create the database:
+```sql
+CREATE DATABASE nepa_rudraksha;
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 6. Run Migrations
+```bash
+php artisan migrate
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+If the project includes seed data:
+```bash
+php artisan db:seed
+```
+
+Or both together:
+```bash
+php artisan migrate --seed
+```
+
+---
+
+## 7. Link Storage
+```bash
+php artisan storage:link
+```
+
+---
+
+## 8. Add Project Images
+
+Place the required image assets inside `public/images/`:
+```
+public/
+└── images/
+    ├── saturn.png
+    ├── mars.png
+    ├── rudmid.png
+    ├── shiva.png
+    └── book.jpg
+```
+
+These are used across the planet section, banners, and hero components.
+
+---
+
+## 9. Build Frontend Assets
+
+For development (with hot reload):
+```bash
+npm run dev
+```
+
+For production:
+```bash
+npm run build
+```
+
+---
+
+## 10. Start the Development Server
+```bash
+php artisan serve
+```
+
+The app will be available at [http://localhost:8000](http://localhost:8000).
+
+---
+
+## Folder Structure (Key Files)
+```
+resources/
+└── views/
+    └── layouts/
+        └── components/
+            ├── navbar.blade.php
+            ├── hero.blade.php
+            ├── badges.blade.php
+            ├── heritage.blade.php
+            ├── stats.blade.php
+            ├── planet.blade.php
+            ├── dis.blade.php
+public/
+└── images/
+```
+
+---
+
+## Common Issues
+
+**Vite manifest not found**
+Run `npm run build` or `npm run dev` before serving the app.
+
+**Class not found / Composer errors**
+Run `composer dump-autoload` to refresh the autoloader.
+
+**Images not showing**
+Ensure all image files are placed in `public/images/` and that `php artisan storage:link` has been run.
+
+**Permission errors on storage or cache**
+```bash
+chmod -R 775 storage bootstrap/cache
+```
+
+---
+
+## Tech Stack
+
+- Laravel 10+
+- Blade templating
+- Tailwind CSS v4 (via `@tailwindcss/vite`)
+- Bootstrap Icons v1.13
+- Alpine.js v3 with `@alpinejs/intersect`
+- Font Awesome v7 (free)
+- Vanilla JS (scroll reveal, nav behavior)
